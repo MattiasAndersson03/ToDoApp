@@ -9,7 +9,7 @@
         {% for task in tasks %}
             <li>
                 {% if task.completed %}
-                    <span style="color: green;">&#10004;</span>  <!-- Green checkmark for completed task -->
+                    <span style="color: green;">&#10004;</span>
                 {% endif %}
                 {{ task['title'] }} (Category: {{ task['category'] }})
                 <form action="/complete/{{ task['id'] }}" method="POST">

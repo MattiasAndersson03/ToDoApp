@@ -4,7 +4,7 @@ import json
 
 app = Flask(__name__)
 
-# Define the read_tasks function to read tasks from a JSON file
+# Läser av task från json filen
 def read_tasks():
     try:
         with open('tasks.json', 'r') as file:
@@ -13,7 +13,7 @@ def read_tasks():
         tasks = []
     return tasks
 
-# Define the save_tasks function to save tasks to a JSON file
+# Sparar nya task till json filen
 def save_tasks(tasks):
     with open('tasks.json', 'w') as file:
         json.dump(tasks, file, indent=4)
@@ -38,7 +38,7 @@ def tasks():
     tasks = read_tasks()
     return render_template('tasks.html', tasks=tasks)
 
-# New route for marking a task as complete
+# Vägen för att markera en task som klar
 @app.route('/complete/<int:task_id>', methods=['POST'])
 def complete_task(task_id):
     tasks = read_tasks()
@@ -49,14 +49,14 @@ def complete_task(task_id):
             break
     return redirect(url_for('tasks'))
 
-# New route for deleting a task
+# Vägen för att plocka bort en task
 @app.route('/delete/<int:task_id>', methods=['POST'])
 def delete_task(task_id):
     tasks = read_tasks()
     for task in tasks:
         if task['id'] == task_id:
-            tasks.remove(task)  # Remove the task from the list
-            save_tasks(tasks)   # Save the updated list without the deleted task
+            tasks.remove(task)  # Tar bort en task från listan
+            save_tasks(tasks)   # spar listan efter en task är bort plockad
             break
     return redirect(url_for('tasks'))
 
