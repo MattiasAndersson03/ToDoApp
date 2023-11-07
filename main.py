@@ -1,11 +1,9 @@
-# http://localhost:5000/
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import json
 
 app = Flask(__name__)
 
-# Läser av task från json filen
-def read_tasks():
+def read_tasks(): # läser av tasks från json filen
     try:
         with open('tasks.json', 'r') as file:
             tasks = json.load(file)
@@ -13,14 +11,13 @@ def read_tasks():
         tasks = []
     return tasks
 
-# Sparar nya task till json filen
-def save_tasks(tasks):
+
+def save_tasks(tasks): # Spara en task till json filen
     with open('tasks.json', 'w') as file:
         json.dump(tasks, file, indent=4)
 
 @app.route('/', methods=['GET', 'POST'])
 def tasks():
-
     if request.method == 'POST':
         data = {
             'title': request.form['title'],
@@ -39,8 +36,7 @@ def tasks():
     tasks = read_tasks()
     return render_template('tasks.html', tasks=tasks)
 
-# Vägen för att markera en task som klar
-@app.route('/complete/<int:task_id>', methods=['POST'])
+@app.route('/tasks/<int:task_id>', methods=['PUT']) #Gör så en task står som completed
 def complete_task(task_id):
     tasks = read_tasks()
     for task in tasks:
@@ -50,31 +46,21 @@ def complete_task(task_id):
             break
     return redirect(url_for('tasks'))
 
-# Vägen för att plocka bort en task
-@app.route('/delete/<int:task_id>', methods=['POST'])
+
+@app.route('/tasks/<int:task_id>', methods=['DELETE']) # Tar bort en task
 def delete_task(task_id):
     tasks = read_tasks()
     for task in tasks:
         if task['id'] == task_id:
-            tasks.remove(task)  # Tar bort en task från listan
-            save_tasks(tasks)   # spar listan efter en task är bort plockad
-            break
-    return redirect(url_for('tasks'))
-
-# Vägen för att hämta en task med specifikt ID
-@app.route('/tasks/<int:task_id>', methods=['GET'])
-def get_task(task_id):
-    tasks = read_tasks()
-    for task in tasks:
-        if task['id'] == task_id:
-            return jsonify(task)
+            tasks.remove(task)
+            save_tasks(tasks)
+            return "Task deleted", 204
     return "Task not found", 404
 
-@app.route('/tasks', methods=['GET'])
+@app.route('/tasks', methods=['GET']) #Hämtar alla tasks
 def get_all_tasks():
     tasks = read_tasks()
     return jsonify(tasks)
 
 if __name__ == '__main__':
     app.run(debug=True)
-

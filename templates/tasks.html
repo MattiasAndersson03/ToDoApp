@@ -8,22 +8,12 @@
     <ul>
         {% for task in tasks %}
             <li>
-                {% if task.completed %}
-                    <span style="color: green;">&#10004;</span>
-                {% endif %}
-                {{ task['title'] }} (Category: {{ task['category'] }})
-                <form action="/complete/{{ task['id'] }}" method="POST">
-                    <button type="submit">Mark as Complete</button>
-                </form>
-                <form action="/delete/{{ task['id'] }}" method="POST">
-                    <button type="submit">Delete</button>
-                </form>
+                <span>{{ task['title'] }} (Category: {{ task['category'] }})</span>
             </li>
         {% endfor %}
     </ul>
-
-    <h2>Add New Task</h2>
-    <form action="/" method="POST">
+    <h2>Add a New Task</h2>
+    <form method="POST" action="/">
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" required>
         <label for="category">Category:</label>
