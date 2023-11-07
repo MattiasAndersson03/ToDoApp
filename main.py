@@ -20,6 +20,7 @@ def save_tasks(tasks):
 
 @app.route('/', methods=['GET', 'POST'])
 def tasks():
+
     if request.method == 'POST':
         data = {
             'title': request.form['title'],
@@ -60,5 +61,20 @@ def delete_task(task_id):
             break
     return redirect(url_for('tasks'))
 
+# Vägen för att hämta en task med specifikt ID
+@app.route('/tasks/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    tasks = read_tasks()
+    for task in tasks:
+        if task['id'] == task_id:
+            return jsonify(task)
+    return "Task not found", 404
+
+@app.route('/tasks', methods=['GET'])
+def get_all_tasks():
+    tasks = read_tasks()
+    return jsonify(tasks)
+
 if __name__ == '__main__':
     app.run(debug=True)
+
