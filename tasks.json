@@ -1,26 +1,8 @@
 [
     {
-        "id": 1,
-        "title": "awda",
-        "completed": false,
-        "category": "dad"
-    },
-    {
-        "id": 2,
-        "title": "adad",
-        "completed": false,
-        "category": "adad"
-    },
-    {
-        "id": 3,
-        "title": "awdawd",
-        "completed": false,
-        "category": "test"
-    },
-    {
         "id": 4,
         "title": "St\u00e4da",
-        "completed": false,
+        "completed": true,
         "category": "prio 1"
     }
 ]

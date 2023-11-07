@@ -7,68 +7,28 @@
     <h1>Task List</h1>
     <ul>
         {% for task in tasks %}
-            <li>{{ task['title'] }}</li>
+            <li>
+                {% if task.completed %}
+                    <span style="color: green;">&#10004;</span>  <!-- Green checkmark for completed task -->
+                {% endif %}
+                {{ task['title'] }} (Category: {{ task['category'] }})
+                <form action="/complete/{{ task['id'] }}" method="POST">
+                    <button type="submit">Mark as Complete</button>
+                </form>
+                <form action="/delete/{{ task['id'] }}" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
 
-    <h2>Add a New Task</h2>
-    <form method="POST" action="/tasks">
+    <h2>Add New Task</h2>
+    <form action="/" method="POST">
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" required>
-        <label for "category">Category:</label>
+        <label for="category">Category:</label>
         <input type="text" name="category" id="category" required>
         <button type="submit">Add Task</button>
     </form>
-
-    <h2>Task Actions</h2>
-    <ul>
-        <li>
-            <form method="GET" action="/tasks/{task_id}">
-                <label for="task_id">Task ID:</label>
-                <input type="number" name="task_id" id="task_id" required>
-                <button type="submit">Get Task</button>
-            </form>
-        </li>
-        <li>
-            <form method="DELETE" action="/tasks/{task_id}">
-                <label for="task_id">Task ID:</label>
-                <input type="number" name="task_id" id="task_id" required>
-                <button type="submit">Delete Task</button>
-            </form>
-        </li>
-        <li>
-            <form method="PUT" action="/tasks/{task_id}">
-                <label for="task_id">Task ID:</label>
-                <input type="number" name="task_id" id="task_id" required>
-                <label for="title">New Title:</label>
-                <input type="text" name="title" id="title" required>
-                <label for "category">New Category:</label>
-                <input type="text" name="category" id="category" required>
-                <button type="submit">Update Task</button>
-            </form>
-        </li>
-        <li>
-            <form method="PUT" action="/tasks/{task_id}/complete">
-                <label for="task_id">Task ID:</label>
-                <input type="number" name="task_id" id="task_id" required>
-                <button type="submit">Mark Task as Completed</button>
-            </form>
-        </li>
-    </ul>
-
-    <h2>Categories</h2>
-    <ul>
-        <li>
-            <form method="GET" action="/tasks/categories/">
-                <button type="submit">Get All Categories</button>
-            </form>
-        </li>
-        <li>
-            <form method="GET" action="/tasks/categories/{category_name}">
-                <label for="category_name">Category Name:</label>
-                <input type="text" name="category_name" id="category_name" required>
-                <button type="submit">Get Tasks by Category</button>
-            </form>
-        </li>
-    </ul>
 </body>
+</html>
