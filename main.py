@@ -4,7 +4,7 @@ import json
 
 app = Flask(__name__)
 
-def read_tasks(): # läser av tasks från json filen
+def read_tasks():
     try:
         with open('tasks.json', 'r') as file:
             tasks = json.load(file)
@@ -12,8 +12,7 @@ def read_tasks(): # läser av tasks från json filen
         tasks = []
     return tasks
 
-
-def save_tasks(tasks): # Spara en task till json filen
+def save_tasks(tasks):
     with open('tasks.json', 'w') as file:
         json.dump(tasks, file, indent=4)
 
@@ -28,7 +27,7 @@ def tasks():
         new_task = {
             'id': len(tasks) + 1,
             'title': data['title'],
-            'completed': False,
+            'completed': False,  # Set to False by default for new tasks
             'category': data['category']
         }
         tasks.append(new_task)
@@ -36,6 +35,7 @@ def tasks():
 
     tasks = read_tasks()
     return render_template('tasks.html', tasks=tasks)
+
 
 @app.route('/tasks/<int:task_id>/complete', methods=['PUT']) #Gör så en task står som completed
 def complete_task(task_id):
@@ -57,6 +57,12 @@ def delete_task(task_id):
             save_tasks(tasks)
             return "Task deleted", 204
     return "Task not found", 404
+
+@app.route('/tasks/categories', methods=['GET'])
+def get_unique_categories():
+    tasks = read_tasks()
+    unique_categories = set(task['category'] for task in tasks)
+    return jsonify(list(unique_categories))
 
 @app.route('/tasks/categories/<string:category_name>', methods=['GET']) #Hämtar task från en specifik kategori
 def get_tasks_by_category(category_name):
@@ -85,5 +91,5 @@ if __name__ == '__main__':
 # DELETE /tasks/{task_id} ✅
 # PUT /tasks/{task_id}
 # PUT /tasks/{task_id}/complete ✅
-# GET /tasks/categories/
+# GET /tasks/categories/ ✅
 # GET /tasks/categories/{category_name} ✅
