@@ -1,14 +1,8 @@
 [
     {
-        "id": 1,
-        "title": "test123",
-        "completed": true,
-        "category": "1313"
-    },
-    {
         "id": 2,
         "title": "adad",
-        "completed": false,
+        "completed": true,
         "category": "wadad"
     },
     {
