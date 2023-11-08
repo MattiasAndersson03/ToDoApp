@@ -1,3 +1,4 @@
+# http://localhost:5000/
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import json
 
@@ -36,7 +37,7 @@ def tasks():
     tasks = read_tasks()
     return render_template('tasks.html', tasks=tasks)
 
-@app.route('/tasks/<int:task_id>', methods=['PUT']) #Gör så en task står som completed
+@app.route('/tasks/<int:task_id>/complete', methods=['PUT']) #Gör så en task står som completed
 def complete_task(task_id):
     tasks = read_tasks()
     for task in tasks:
