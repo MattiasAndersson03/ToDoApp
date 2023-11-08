@@ -58,10 +58,32 @@ def delete_task(task_id):
             return "Task deleted", 204
     return "Task not found", 404
 
+@app.route('/tasks/categories/<string:category_name>', methods=['GET']) #Hämtar task från en specifik kategori
+def get_tasks_by_category(category_name):
+    tasks = read_tasks()
+    tasks_in_category = [task for task in tasks if task['category'] == category_name]
+    return jsonify(tasks_in_category)
+
 @app.route('/tasks', methods=['GET']) #Hämtar alla tasks
 def get_all_tasks():
     tasks = read_tasks()
     return jsonify(tasks)
+@app.route('/tasks/<int:task_id>', methods=['GET']) # Hämtar en task med specifikt id
+def get_task(task_id):
+    tasks = read_tasks()
+    for task in tasks:
+        if task['id'] == task_id:
+            return jsonify(task)
+    return "Uppgift ej hittad", 404
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+# GET /tasks ✅
+# POST /tasks
+# GET /tasks/{task_id} ✅
+# DELETE /tasks/{task_id} ✅
+# PUT /tasks/{task_id}
+# PUT /tasks/{task_id}/complete ✅
+# GET /tasks/categories/
+# GET /tasks/categories/{category_name} ✅
