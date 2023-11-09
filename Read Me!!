@@ -2,3 +2,7 @@ För att kunna lägga till en task görs det vi form data det fungerar på samma
 key: title
 key: category
 
+När du använder get för att få fram tasks kan du sortera.
+/completed
+/incomplete
+

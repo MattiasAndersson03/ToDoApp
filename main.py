@@ -1,8 +1,12 @@
 # http://localhost:5000/
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 def read_tasks(): # Används för att läsa uppgifterna från json filen
     try:
@@ -16,7 +20,8 @@ def save_tasks(tasks): # Sparar task till json filen
     with open('tasks.json', 'w') as file:
         json.dump(tasks, file, indent=4)
 
-@app.route('/tasks', methods=['GET', 'POST']) # Används för att både vissa nurvarande task även ta emot nya tasks
+
+@app.route('/tasks', methods=['GET', 'POST']) # plockar fram och kan även lägga till nya tasks
 def tasks():
     if request.method == 'POST':
         data = {
@@ -36,6 +41,18 @@ def tasks():
 
     tasks = read_tasks()
     return jsonify(tasks)
+
+@app.route('/tasks/completed', methods=['GET']) # ploackar fråm de completed tasks
+def completed_tasks():
+    tasks = read_tasks()
+    completed_tasks = [task for task in tasks if task['completed'] is True]
+    return jsonify(completed_tasks)
+
+@app.route('/tasks/incomplete', methods=['GET']) # plockar from de incompleted tasks
+def incomplete_tasks():
+    tasks = read_tasks()
+    incomplete_tasks = [task for task in tasks if task['completed'] is False]
+    return jsonify(incomplete_tasks)
 
 @app.route('/tasks/<int:task_id>', methods=['PUT']) # Ändrar en task med specifikt id
 def update_task(task_id):
