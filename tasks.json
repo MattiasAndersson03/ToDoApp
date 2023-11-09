@@ -1,44 +1,26 @@
 [
     {
         "id": 1,
-        "title": "test",
+        "title": "Damsuga",
         "completed": false,
-        "category": "hejsan"
+        "category": "st\u00e4da"
     },
     {
         "id": 2,
-        "title": "vsf",
+        "title": "Sopa",
         "completed": false,
-        "category": "dfsf"
+        "category": "st\u00e4da"
     },
     {
         "id": 3,
-        "title": "fgrg",
+        "title": "Tomater",
         "completed": false,
-        "category": "sfsf"
+        "category": "handla"
     },
     {
         "id": 4,
-        "title": "132",
-        "completed": true,
-        "category": "test"
-    },
-    {
-        "id": 5,
-        "title": "test",
+        "title": "gurka",
         "completed": false,
-        "category": "1234552525"
-    },
-    {
-        "id": 6,
-        "title": "test",
-        "completed": false,
-        "category": "123"
-    },
-    {
-        "id": 7,
-        "title": "uppdaterad13131313",
-        "completed": true,
-        "category": "test"
+        "category": "handla"
     }
 ]
