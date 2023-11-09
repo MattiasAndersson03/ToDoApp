@@ -33,6 +33,12 @@
         "id": 6,
         "title": "test",
         "completed": false,
-        "category": "hejsan"
+        "category": "123"
+    },
+    {
+        "id": 7,
+        "title": "uppdaterad13131313",
+        "completed": true,
+        "category": "test"
     }
 ]
