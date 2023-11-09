@@ -37,6 +37,21 @@ def tasks():
     tasks = read_tasks()
     return jsonify(tasks)
 
+@app.route('/tasks/<int:task_id>', methods=['PUT']) # Ändrar en task med specifikt id
+def update_task(task_id):
+    tasks = read_tasks()
+    for task in tasks:
+        if task['id'] == task_id:
+            data = {
+                'title': request.form['title'],
+                'category': request.form['category']
+            }
+            task['title'] = data['title']
+            task['category'] = data['category']
+            save_tasks(tasks)
+            return jsonify(task)
+    return "Task not found", 404
+
 @app.route('/tasks/<int:task_id>/complete', methods=['PUT']) # Ändra en task till completed true
 def complete_task(task_id):
     tasks = read_tasks()
@@ -84,7 +99,7 @@ if __name__ == '__main__':
 # POST /tasks ✅
 # GET /tasks/{task_id} ✅
 # DELETE /tasks/{task_id} ✅
-# PUT /tasks/{task_id}
+# PUT /tasks/{task_id} ✅
 # PUT /tasks/{task_id}/complete ✅
 # GET /tasks/categories/ ✅
 # GET /tasks/categories/{category_name} ✅

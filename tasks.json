@@ -1,9 +1,9 @@
 [
     {
         "id": 1,
-        "title": "123",
+        "title": "test",
         "completed": false,
-        "category": "fafa"
+        "category": "hejsan"
     },
     {
         "id": 2,
@@ -31,8 +31,8 @@
     },
     {
         "id": 6,
-        "title": "testawdawdad",
+        "title": "test",
         "completed": false,
-        "category": "test"
+        "category": "hejsan"
     }
 ]
